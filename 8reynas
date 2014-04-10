@@ -1,0 +1,155 @@
+/*
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package pkg8reynas;
+
+import java.util.ArrayList;
+
+/**
+ *
+ * @author pc
+ */
+public class Main {
+  int tablero[][]={{0,0,0,0,0,0,0,0},
+                   {0,0,0,0,0,0,0,0},
+                   {0,0,0,0,0,0,0,0},
+                   {0,0,0,0,0,0,0,0},
+                   {0,0,0,0,0,0,0,0},
+                   {0,0,0,0,0,0,0,0},
+                   {0,0,0,0,0,0,0,0},
+                   {0,0,0,0,0,0,0,0}};             
+    ArrayList <Integer>vectorposicon=new ArrayList<>();
+   
+         //guardara la posicion de cada reyna
+    public Main(ArrayList vectorposicon){
+        this.vectorposicon=vectorposicon;
+    } 
+    /**u   int nreynas;
+  int  numFilas    = 8;
+        int numColumnas = 8;blicv
+     * @param args the command line arguments
+     */
+//impresion del tablero
+public void imprimir(){
+    for (int i=0;i<8;i++)
+    {
+        for(int j=0;j<8;j++)
+        {
+            System.out.print(tablero[i][j] + " ");
+        }
+        System.out.println();
+    }
+}
+public void insertar(ArrayList<Integer> vctsol)
+{
+    
+    for(int i=0;i<vctsol.size();i++)
+    {
+        tablero[vctsol.get(i)][i]=1;
+    }
+    this.imprimir();
+}
+
+
+
+
+
+public void iniciar(int columna,int fila,ArrayList<Integer> vctpos ,int nreynas){
+//System.out.println("reynas totales"+nreynas);
+//insertar(vctpos);
+    try{
+    if(nreynas==8) {
+        System.out.println("reynas totales"+nreynas);
+        this.vectorposicon=vctpos;
+    this.insertar(vectorposicon);
+    for(int i=0;i<8;i++)
+    {
+        //System.out.println("columna "+ i +"filasss"+ vectorposicon.get(i));
+    }
+} 
+
+else{
+    
+    for(int i=fila;i<=8;i++){
+       if(i==8){
+           int fi=(vctpos.get(vctpos.size()-1));
+           vctpos.remove(vctpos.size()-1);
+           this.iniciar(columna-1,fi+1,vctpos,nreynas-1); 
+          
+       }
+        else if(!filaocupada(i,vctpos)&&(!diagonalesocupadas(columna,i,vctpos) ) && (!diagonalinvocupadas(columna,i,vctpos)))
+       {
+                vctpos.add(i);
+               //System.out.println("columnsa en" + i + "fila"+ vctpos.get(i));
+               this.iniciar(columna+1,0,vctpos,nreynas+1);   
+               
+       }
+   }
+  }
+       
+    }catch( ArrayIndexOutOfBoundsException e ) {
+System.out.println("Desbordamiento");
+}
+finally
+{
+System.out.println("Ha finalizado la ejecución");
+System.exit(0);
+}
+ }
+
+boolean filaocupada(int fila,ArrayList<Integer> vctpos)
+{
+    if(vctpos.contains(fila) ){
+       // System.out.println("fila ocupada");
+        return true;//la fila esta ocupada 
+        
+    }
+    
+    return false;//fila disponible
+        
+}
+
+boolean diagonalesocupadas(int columna ,int fila, ArrayList<Integer> vctpos){
+    for(int i=0;i<vctpos.size();i++)
+    {
+       
+             if(((columna-fila)==(i-vctpos.get(i))))
+             {
+                 return true;
+             }
+       
+    }
+    
+    return false;
+}
+
+boolean diagonalinvocupadas(int columna ,int fila, ArrayList<Integer> vctpos){
+    for(int i=0;i<vctpos.size();i++)
+    {
+       
+             if(((columna+fila)==(i+vctpos.get(i))))
+             {
+                 return true;
+                
+             }
+       
+    }
+    
+    return false;
+}
+
+   
+
+public static void main(String[] args) {
+    ArrayList <Integer>vectorposicon=new ArrayList<>();
+    Main j= new Main(vectorposicon); 
+    //vectorposicon.add(0);
+    j.iniciar(0, 1,vectorposicon,0);
+    j.insertar(vectorposicon);
+    
+
+   //} j.insertar(vectorposicon);
+    
+}
+}
